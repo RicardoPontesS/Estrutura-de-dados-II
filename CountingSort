@@ -1,0 +1,46 @@
+#include<stdio.h>
+#include<time.h> 
+void counting_sort(int A[],int n ,int k )
+{
+    int i, j;
+    int *B;
+    B = malloc(n * sizeof(int));
+	int *C;
+	C = malloc(n * sizeof(int));
+	 
+    for (i = 0; i <= k; i++)
+        C[i] = 0;
+    for (j = 1; j <= n; j++)
+        C[A[j]] = C[A[j]] + 1;
+    for (i = 1; i <= k; i++)
+        C[i] = C[i] + C[i-1];
+    for (j = n; j >= 1; j--)
+    {
+        B[C[A[j]]] = A[j];
+        C[A[j]] = C[A[j]] - 1;
+    }
+    printf("The Sorted array is : ");
+    for (i = 1; i <= n; i++)
+        printf("[%d] ", B[i]);
+}
+int main(){	
+	time_t t_ini, t_fim;
+	int *a;
+	int n,i,max=0;
+    printf("Entre com o numero de elementos:");
+    scanf("%d",&n);
+    a = malloc(n * sizeof(int));
+                  
+    for(i=0;i<n;i++)
+    {
+     *(a+i) = rand() % 10000;
+     if(a[i]>max)
+      max=a[i];
+    }
+    t_ini = time(NULL);
+    counting_sort(a,n,max);
+    t_fim = time(NULL);
+    double tempo = difftime(t_fim,t_ini);
+	printf("\n %f",tempo);
+    return 0;
+}
